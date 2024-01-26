@@ -17,6 +17,11 @@ public class Possession : ScriptableObject
     private Possessable.PossessableEvent onUnpossessEvent = new();
     public Possessable.PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
+    private void Awake() {
+        // Reset possession on awake to ensure events are fired as intended.
+        currentPossession = null;
+    }
+
 
     public void Possess(Possessable possessable)
     {
