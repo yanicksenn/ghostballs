@@ -10,12 +10,24 @@ public class Possessable : MonoBehaviour
     public bool IsPossessed => possession.CurrentPossession == this;
 
     [SerializeField, Tooltip("Indicating that this GameObject should immediately "
-        + "be possessed at the start. Makes sense to use this on the main player.")]
+        + "be possessed at the start. Makes sense to use this on the main player."
+        + "Also indicating whether this is the fallback possessable. "
+        + "If the host of the current possession dies then the fallback possession "
+        + "is being possessed again. The fallback possession cannot die.")]
     private bool possessAtStart;
 
     [SerializeField, Tooltip("Indicating that this GameObject is being possessed. "
         + "May be null.")]
     private GameObject possessionIndicator;
+
+    [SerializeField, Space]
+    private float movementSpeed;
+
+    [SerializeField]
+    private Transform projectileSpawnLocation;
+
+    [SerializeField]
+    private Projectile projectileTemplate;
 
     [SerializeField, Space]
     private PossessableEvent onPossessEvent = new();
@@ -25,15 +37,46 @@ public class Possessable : MonoBehaviour
     private PossessableEvent onUnpossessEvent = new();
     public PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
-    [SerializeField, Space]
-    private float movementSpeed;
+    [SerializeField]
+    private PossessableEvent onDeathEvent = new();
+    public PossessableEvent OnDeathEvent => onDeathEvent;
 
+    private Camera camera;
     private CharacterController characterController;
+
+    private bool dead;
+
+    public void Possess()
+    {
+        if (!dead)
+        {
+            possession.Possess(this);
+        }
+    }
+
+    public void Die()
+    {
+        if (IsPossessed && !possessAtStart && !dead)
+        {
+            dead = true;
+            possession.Unpossess();
+            OnDeathEvent.Invoke(this);
+
+
+            // Play death animation here.
+        }
+    }
 
     private void Awake()
     {
+        camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
         possessionIndicator.SetActive(false);
+
+        if (possessAtStart)
+        {
+            possession.FallbackPossessable = this;
+        }
     }
 
     private void OnEnable()
@@ -54,7 +97,8 @@ public class Possessable : MonoBehaviour
         // called by `Start` will win.
         if (possessAtStart)
         {
-            possession.Possess(this);
+            // Reset possession on awake to ensure events are fired as intended.
+            Possess();
         }
     }
     private void Update()
@@ -68,6 +112,32 @@ public class Possessable : MonoBehaviour
         var z = Input.GetAxisRaw("Vertical");
         var direction = new Vector3(x, 0, z).normalized;
         characterController.Move(Time.deltaTime * movementSpeed * direction);
+
+        // Rotate character towards mouse position.
+        var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
+        var groundPlane = new Plane(Vector3.up, Vector3.zero);
+        if (groundPlane.Raycast(cameraRay, out var rayLength))
+        {
+            Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+        }
+
+        // Shoot possesion projection towards mouse possition. If no projectile
+        // is serialized, then shooting is not possible.
+        if (Input.GetMouseButtonDown(0 /* RMB */) && projectileTemplate != null)
+        {
+            var projectile = Instantiate(projectileTemplate);
+            projectile.transform.position = projectileSpawnLocation.transform.position;
+            projectile.transform.forward = transform.forward;
+            projectile.OnCollide.AddListener((collision) =>
+            {
+                var possessable = collision.gameObject.GetComponent<Possessable>();
+                if (possessable != null)
+                {
+                    possessable.Possess();
+                }
+            });
+        }
     }
 
     private void OnPossess(Possessable possessable)

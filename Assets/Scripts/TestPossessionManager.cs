@@ -22,5 +22,10 @@ public class TestPossessionManager : MonoBehaviour
         {
             possession.Possess(possessable2);
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            possession.CurrentPossession.Die();
+        }
     }
 }
