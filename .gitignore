@@ -142,3 +142,4 @@ https://www.toptal.com/developers/gitignore/api/unity,windows,macos
 
 # Ignore Blender backup files
 *.blend?
+*.blend?.meta
