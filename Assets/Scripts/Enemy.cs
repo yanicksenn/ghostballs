@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class Enemy : MonoBehaviour
@@ -15,23 +15,46 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float attackDistance;
 
-    private CharacterController characterController;
-    private Killable killable;
+    [SerializeField, Space]
+    private EnemyEvent onEnrage = new();
+    public EnemyEvent OnEnrage => onEnrage;
+
+    [SerializeField]
+    private EnemyEvent onCharge = new();
+    public EnemyEvent OnCharge => onCharge;
+
+    [SerializeField]
+    private EnemyEvent onAttackHit = new();
+    public EnemyEvent OnAttackHit => onAttackHit;
+
+    [SerializeField]
+    private EnemyEvent onAttackMiss = new();
+    public EnemyEvent OnAttackMiss => onAttackMiss;
 
     private State currentState = new Idle();
     private State previousState = new Idle();
 
+    private CharacterController characterController;
+    private Animator animator;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         // If this GameObject is possessed, then do not behave like an enemy. :)
-        if (possession.CurrentPossession.gameObject == gameObject) {
+        if (possession.CurrentPossession.gameObject == gameObject)
+        {
             return;
+        } else {
+            BehaveLikeAnNPC();
         }
+    }
+
+    private void BehaveLikeAnNPC() {
 
         var enteredState = previousState.GetType() != currentState.GetType();
         switch (currentState)
@@ -42,6 +65,7 @@ public class Enemy : MonoBehaviour
                     if (possessableInSight != null)
                     {
                         SetState(new Enraged());
+                        OnEnrage.Invoke(this);
                         return;
                     }
                 }
@@ -56,25 +80,31 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
+                        var target = possessableInSight.gameObject.transform.position;
                         var direction = possessableInSight.gameObject.transform.position - transform.position;
                         var directionNormalized = direction.normalized;
-                        characterController.Move(Time.deltaTime * 2 /*speed*/ * directionNormalized);
+                        characterController.Move(Time.deltaTime * 4 /*speed*/ * directionNormalized);
+                        transform.LookAt(target);
 
                         if (IsInAttackDistance(possessableInSight.gameObject.transform))
                         {
-                            SetState(new Attacking());
+                            SetState(new Charge());
+                            OnCharge.Invoke(this);
                             return;
                         }
                     }
                 }
                 break;
-            case Attacking _:
+            case Charge _:
                 {
-                    if (enteredState) {
-                        StartCoroutine(PerformAttack());
+                    if (enteredState)
+                    {
+                        Attack();
                         return;
                     }
                 }
+                break;
+            case Attacking _:
                 break;
             default:
                 break;
@@ -99,12 +129,27 @@ public class Enemy : MonoBehaviour
             }
 
             // Ignore dead possessables. They're harmless.
-            if (possessable.IsDead) {
+            if (possessable.IsDead)
+            {
                 continue;
             }
 
             // Ignore unpossessed GameObjects. They're harmless... For now.
             if (!possessable.IsPossessed)
+            {
+                continue;
+            }
+
+            // Technically possible, although not realistic that the ray does not hit anyone although 
+            // the possessable is right there.
+            var rayDirection = (possessable.transform.position - transform.position).normalized;
+            if (!Physics.Raycast(transform.position, rayDirection, out var directHit))
+            {
+                continue;
+            }
+
+            // There might be a wall in between the possessable and the enemy.
+            if (directHit.collider.gameObject != possessable.gameObject)
             {
                 continue;
             }
@@ -115,44 +160,57 @@ public class Enemy : MonoBehaviour
         return null;
     }
 
-    private bool IsInAttackDistance(Transform transformToAttack) {
+    private bool IsInAttackDistance(Transform transformToAttack)
+    {
         var sqrDistance = (transformToAttack.position - transform.position).sqrMagnitude;
         return sqrDistance <= Mathf.Pow(attackDistance, 2);
     }
 
-    private IEnumerator PerformAttack() {
-        yield return new WaitForSeconds(2f);
-        SetState(new Enraged());
-        
+    private IEnumerator PerformAttackAfterCharge(float chargeDuration, Action completionAction)
+    {
+        yield return new WaitForSeconds(chargeDuration);
         var possessableInSight = GetAlivePossessableInSight();
-        if (possessableInSight != null && IsInAttackDistance(possessableInSight.transform)) {
+        if (possessableInSight != null && IsInAttackDistance(possessableInSight.transform))
+        {
+            Debug.Log("Kill " + possessableInSight.name);
             possessableInSight.Die();
+
+            OnAttackHit.Invoke(this);
+        } else {
+            OnAttackMiss.Invoke(this);
         }
+        completionAction.Invoke();
     }
 
-    private void SetState(State newState) {
+    private void SetState(State newState)
+    {
         previousState = currentState;
         currentState = newState;
-        Debug.Log($"{previousState.GetType().Name} : {currentState.GetType().Name}");
+    }
+
+    private void Attack() {
+        SetState(new Attacking());
+        animator.SetTrigger("Attack");
+        StartCoroutine(PerformAttackAfterCharge(0.87f, () =>
+        {
+            SetState(new Idle());
+        }));
     }
 
 
-    private abstract class State
+    private abstract class State { }
+
+    private class Idle : State { }
+
+    private class Enraged : State { }
+
+    private class Charge : State { }
+
+    private class Attacking : State { }
+
+    [Serializable]
+    public class EnemyEvent : UnityEvent<Enemy>
     {
 
-    }
-
-    private class Idle : State
-    {
-
-    }
-
-    private class Enraged : State
-    {
-
-    }
-
-    private class Attacking : State
-    {
     }
 }
