@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
-public class Possessable : MonoBehaviour
+public class Possessable : Killable
 {
     [SerializeField]
     private Possession possession;
@@ -37,33 +37,23 @@ public class Possessable : MonoBehaviour
     private PossessableEvent onUnpossessEvent = new();
     public PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
-    [SerializeField]
-    private PossessableEvent onDeathEvent = new();
-    public PossessableEvent OnDeathEvent => onDeathEvent;
-
     private Camera camera;
     private CharacterController characterController;
 
-    private bool dead;
-
     public void Possess()
     {
-        if (!dead)
+        if (!IsDead)
         {
             possession.Possess(this);
         }
     }
 
-    public void Die()
+    override public void Die()
     {
-        if (IsPossessed && !possessAtStart && !dead)
+        base.Die();
+        if (IsPossessed)
         {
-            dead = true;
             possession.Unpossess();
-            OnDeathEvent.Invoke(this);
-
-
-            // Play death animation here.
         }
     }
 
