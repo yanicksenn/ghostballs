@@ -463,7 +463,7 @@ PrefabInstance:
     - target: {fileID: 4359336923370289252, guid: 3f1f99c95de9ea34fb375cc34cd1ceec,
         type: 3}
       propertyPath: m_Name
-      value: PosessionIndicator
+      value: PossessionIndicator
       objectReference: {fileID: 0}
     - target: {fileID: 6612130432235074244, guid: 3f1f99c95de9ea34fb375cc34cd1ceec,
         type: 3}
