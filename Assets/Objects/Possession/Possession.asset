@@ -13,3 +13,12 @@ MonoBehaviour:
   m_Name: Possession
   m_EditorClassIdentifier: 
   currentPossession: {fileID: 0}
+  onPossessEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnpossessEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
