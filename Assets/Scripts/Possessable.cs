@@ -43,6 +43,7 @@ public class Possessable : MonoBehaviour
 
     private Camera camera;
     private CharacterController characterController;
+    private Animator animator;
 
     private bool dead;
 
@@ -71,6 +72,7 @@ public class Possessable : MonoBehaviour
     {
         camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         possessionIndicator.SetActive(false);
 
         if (possessAtStart)
@@ -112,6 +114,9 @@ public class Possessable : MonoBehaviour
         var z = Input.GetAxisRaw("Vertical");
         var direction = new Vector3(x, 0, z).normalized;
         characterController.Move(Time.deltaTime * movementSpeed * direction);
+        if (animator != null) {
+            animator.SetBool("isWalking", direction.sqrMagnitude >= Mathf.Epsilon);
+        }
 
         // Rotate character towards mouse position.
         var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
