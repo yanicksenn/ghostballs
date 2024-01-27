@@ -3,13 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create possession", fileName = "Possession")]
 public class Possession : ScriptableObject
 {
-    public bool IsPossesssing => currentPossession != null;
+    public bool IsPossesssing => CurrentPossession != null;
 
     public Possessable FallbackPossessable {get;set;}
 
-    [SerializeField]
-    private Possessable currentPossession;
-    public Possessable CurrentPossession => currentPossession;
+    public Possessable CurrentPossession {get; private set;}
 
     [SerializeField, Space]
     private Possessable.PossessableEvent onPossessEvent = new();
@@ -19,18 +17,14 @@ public class Possession : ScriptableObject
     private Possessable.PossessableEvent onUnpossessEvent = new();
     public Possessable.PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
-    [SerializeField]
-    private Possessable.PossessableEvent onDeathEvent = new();
-    public Possessable.PossessableEvent OnDeathEvent => onDeathEvent;
-
     public void Possess(Possessable newPossessable)
     {
-        if (newPossessable == currentPossession) {return;}
+        if (newPossessable == CurrentPossession) {return;}
         if (newPossessable.IsDead) { return; }
     
-        FireOnUnpossess(currentPossession);
-        currentPossession = newPossessable;
-        FireOnPossess(currentPossession);
+        FireOnUnpossess(CurrentPossession);
+        CurrentPossession = newPossessable;
+        FireOnPossess(CurrentPossession);
     }
 
     public void Unpossess() {

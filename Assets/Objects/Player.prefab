@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 7239311067195327565}
   - component: {fileID: 2168714112152723574}
   - component: {fileID: 9191794566618839781}
+  - component: {fileID: 3608294647888445999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -131,79 +132,26 @@ MonoBehaviour:
   isDead: 0
   onDeathEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2636230321907453665}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Deflate
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   possessAtStart: 1
   movementSpeed: 3
   projectileSpawnLocation: {fileID: 5962285882352362516}
   projectileTemplate: {fileID: 8661414783448721923, guid: 9cb3c01b7aed54e28b4c936aa09c3736,
     type: 3}
-  onPossessEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2636230321907453665}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: ResetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Deflate
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2636230321907453665}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Inflate
-          m_BoolArgument: 0
-        m_CallState: 2
-  onUnpossessEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2636230321907453665}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: ResetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Inflate
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2636230321907453665}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Deflate
-          m_BoolArgument: 0
-        m_CallState: 2
+--- !u!114 &3608294647888445999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949100829800483309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75a7124ac75a479092c1aaf95e302db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
 --- !u!1001 &4044934179865356614
 PrefabInstance:
   m_ObjectHideFlags: 0

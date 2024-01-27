@@ -10,14 +10,10 @@ public class Possessable : Killable
     private Possession possession;
     public bool IsPossessed => possession.CurrentPossession == this;
 
-    [SerializeField, Tooltip("Indicating that this GameObject should immediately "
-        + "be possessed at the start. Makes sense to use this on the main player."
-        + "Also indicating whether this is the fallback possessable. "
-        + "If the host of the current possession dies then the fallback possession "
-        + "is being possessed again.")]
+    [SerializeField]
     private bool possessAtStart;
 
-    [SerializeField, Space]
+    [SerializeField]
     private float movementSpeed;
 
     [SerializeField]
@@ -26,36 +22,11 @@ public class Possessable : Killable
     [SerializeField]
     private Projectile projectileTemplate;
 
-    [SerializeField, Space]
-    private PossessableEvent onPossessEvent = new();
-    public PossessableEvent OnPossessEvent => onPossessEvent;
-
-    [SerializeField]
-    private PossessableEvent onUnpossessEvent = new();
-    public PossessableEvent OnUnpossessEvent => onUnpossessEvent;
-
     private new Camera camera;
     private CharacterController characterController;
     private Animator animator;
     private PlayersControls playersControls;
     private float attackCoolDown = 0.0f;
-
-    public void Possess()
-    {
-        if (!IsDead)
-        {
-            possession.Possess(this);
-        }
-    }
-
-    override public void Die()
-    {
-        base.Die();
-        if (IsPossessed)
-        {
-            possession.Unpossess();
-        }
-    }
 
     private void Awake()
     {
@@ -72,15 +43,13 @@ public class Possessable : Killable
 
     private void OnEnable()
     {
-        possession.OnPossessEvent.AddListener(OnPossess);
-        possession.OnUnpossessEvent.AddListener(OnUnpossess);
+        OnDeathEvent.AddListener(OnDeath);
         playersControls.Enable();
     }
 
     private void OnDisable()
     {
-        possession.OnPossessEvent.RemoveListener(OnPossess);
-        possession.OnUnpossessEvent.RemoveListener(OnUnpossess);
+        OnDeathEvent.RemoveListener(OnDeath);
         playersControls.Disable();
     }
 
@@ -91,7 +60,7 @@ public class Possessable : Killable
         if (possessAtStart)
         {
             // Reset possession on awake to ensure events are fired as intended.
-            Possess();
+            possession.Possess(this);
         }
     }
 
@@ -148,42 +117,21 @@ public class Possessable : Killable
                 var possessable = collision.gameObject.GetComponent<Possessable>();
                 if (possessable != null)
                 {
-                    possessable.Possess();
+                    possession.Possess(this);
                 }
             });
         }
         attackCoolDown -= Time.deltaTime;
     }
 
-    private void OnPossess(Possessable possessable)
+    private void OnDeath(Killable killable)
     {
-        if (possessable == this)
+        if (IsPossessed)
         {
-            OnPossessEvent.Invoke(this);
-            OnPossessThis();
+            possession.Unpossess();
         }
-    }
-
-    private void OnPossessThis()
-    {
-    }
-
-    private void OnUnpossess(Possessable possessable)
-    {
-        if (possessable == this)
-        {
-            OnUnpossessEvent.Invoke(this);
-            OnUnpossessThis();
-        }
-    }
-
-    private void OnUnpossessThis()
-    {
     }
 
     [Serializable]
-    public class PossessableEvent : UnityEvent<Possessable>
-    {
-
-    }
+    public class PossessableEvent : UnityEvent<Possessable> { }
 }
