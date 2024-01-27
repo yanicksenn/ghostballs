@@ -25,9 +25,8 @@ public class Possession : ScriptableObject
 
     public void Possess(Possessable newPossessable)
     {
-        if (newPossessable.IsDead) {
-            return;
-        }
+        if (newPossessable == currentPossession) {return;}
+        if (newPossessable.IsDead) { return; }
     
         FireOnUnpossess(currentPossession);
         currentPossession = newPossessable;

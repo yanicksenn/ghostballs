@@ -46,15 +46,18 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         // If this GameObject is possessed, then do not behave like an enemy. :)
-        if (possession.CurrentPossession.gameObject == gameObject)
+        if (possession.IsPossesssing && possession.CurrentPossession.gameObject == gameObject)
         {
             return;
-        } else {
+        }
+        else
+        {
             BehaveLikeAnNPC();
         }
     }
 
-    private void BehaveLikeAnNPC() {
+    private void BehaveLikeAnNPC()
+    {
 
         var enteredState = previousState.GetType() != currentState.GetType();
         switch (currentState)
@@ -176,7 +179,9 @@ public class Enemy : MonoBehaviour
             possessableInSight.Die();
 
             OnAttackHit.Invoke(this);
-        } else {
+        }
+        else
+        {
             OnAttackMiss.Invoke(this);
         }
         completionAction.Invoke();
@@ -188,7 +193,8 @@ public class Enemy : MonoBehaviour
         currentState = newState;
     }
 
-    private void Attack() {
+    private void Attack()
+    {
         SetState(new Attacking());
         animator.SetTrigger("Attack");
         StartCoroutine(PerformAttackAfterCharge(0.87f, () =>
