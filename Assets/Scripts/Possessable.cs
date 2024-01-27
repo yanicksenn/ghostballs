@@ -13,7 +13,7 @@ public class Possessable : Killable
         + "be possessed at the start. Makes sense to use this on the main player."
         + "Also indicating whether this is the fallback possessable. "
         + "If the host of the current possession dies then the fallback possession "
-        + "is being possessed again. The fallback possession cannot die.")]
+        + "is being possessed again.")]
     private bool possessAtStart;
 
     [SerializeField, Space]
@@ -58,7 +58,7 @@ public class Possessable : Killable
     {
         camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         if (possessAtStart)
         {
@@ -90,6 +90,7 @@ public class Possessable : Killable
     }
     private void Update()
     {
+        if (IsDead) return;
         if (!IsPossessed) return;
 
         // Currently, a possessable controls whether you can move via anywhere. 
