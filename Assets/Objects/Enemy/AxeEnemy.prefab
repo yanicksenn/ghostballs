@@ -204,6 +204,9 @@ GameObject:
   - component: {fileID: 4974844678695421233}
   - component: {fileID: 2590926784690823609}
   - component: {fileID: 7206621946686392902}
+  - component: {fileID: 6696916971863059479}
+  - component: {fileID: 368279202161392287}
+  - component: {fileID: 8288727723920207248}
   - component: {fileID: 8045118414806901686}
   - component: {fileID: 3961120778353693247}
   - component: {fileID: 3877015970408636711}
@@ -361,15 +364,63 @@ MonoBehaviour:
         m_CallState: 2
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   possessAtStart: 0
-  movementSpeed: 3
   projectileSpawnLocation: {fileID: 0}
   projectileTemplate: {fileID: 0}
-  onPossessEvent:
+--- !u!114 &6696916971863059479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991105499247035126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3840765abc424f5a929d8acf7d82215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4
+--- !u!114 &368279202161392287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991105499247035126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a827431d6e97f49299e4d699fba7a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCoolDown: 2
+  onAttack:
     m_PersistentCalls:
-      m_Calls: []
-  onUnpossessEvent:
-    m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8288727723920207248}
+        m_TargetAssemblyTypeName: AxeSwinger, Assembly-CSharp
+        m_MethodName: Swing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8288727723920207248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991105499247035126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb1c8dc8f1554ec4abae19c2ad17c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusOfImpact: 1
+  delayOfImpact: 0.87
 --- !u!114 &8045118414806901686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,8 +436,6 @@ MonoBehaviour:
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   visionDistance: 4
   attackDistance: 2
-  attackChargeDuration: 2
-  characterController: {fileID: 0}
   onEnrage:
     m_PersistentCalls:
       m_Calls: []

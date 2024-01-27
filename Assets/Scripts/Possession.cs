@@ -5,9 +5,9 @@ public class Possession : ScriptableObject
 {
     public bool IsPossesssing => CurrentPossession != null;
 
-    public Possessable FallbackPossessable {get;set;}
+    public Possessable FallbackPossessable { get; set; }
 
-    public Possessable CurrentPossession {get; private set;}
+    public Possessable CurrentPossession { get; private set; }
 
     [SerializeField, Space]
     private Possessable.PossessableEvent onPossessEvent = new();
@@ -17,17 +17,23 @@ public class Possession : ScriptableObject
     private Possessable.PossessableEvent onUnpossessEvent = new();
     public Possessable.PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
+    public void OnEnable()
+    {
+        CurrentPossession = null;
+    }
+
     public void Possess(Possessable newPossessable)
     {
-        if (newPossessable == CurrentPossession) {return;}
+        if (newPossessable == CurrentPossession) { return; }
         if (newPossessable.IsDead) { return; }
-    
+
         FireOnUnpossess(CurrentPossession);
         CurrentPossession = newPossessable;
         FireOnPossess(CurrentPossession);
     }
 
-    public void Unpossess() {
+    public void Unpossess()
+    {
         Possess(FallbackPossessable);
     }
 

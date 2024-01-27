@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2614,6 +2614,7 @@ GameObject:
   - component: {fileID: 1147868853}
   - component: {fileID: 1147868852}
   - component: {fileID: 1147868851}
+  - component: {fileID: 1147868857}
   - component: {fileID: 1147868850}
   - component: {fileID: 1147868849}
   - component: {fileID: 1147868848}
@@ -2710,15 +2711,8 @@ MonoBehaviour:
         m_CallState: 2
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   possessAtStart: 0
-  movementSpeed: 3
   projectileSpawnLocation: {fileID: 0}
   projectileTemplate: {fileID: 0}
-  onPossessEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onUnpossessEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!143 &1147868852
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2833,6 +2827,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1147868857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147868847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3840765abc424f5a929d8acf7d82215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 3
 --- !u!1001 &1192640660
 PrefabInstance:
   m_ObjectHideFlags: 0

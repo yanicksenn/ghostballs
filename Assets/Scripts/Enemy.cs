@@ -34,31 +34,35 @@ public class Enemy : MonoBehaviour
     private State currentState = new Idle();
     private State previousState = new Idle();
 
-    private CharacterController characterController;
-    private Animator animator;
+    private Killable killable;
+    private Walker walker;
+    private Attacker attacker;
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        killable = GetComponent<Killable>();
+        walker = GetComponent<Walker>();
+        attacker = GetComponent<Attacker>();
     }
 
     private void Update()
     {
+        if (killable != null && killable.IsDead)
+        {
+            return;
+        }
+
         // If this GameObject is possessed, then do not behave like an enemy. :)
         if (possession.IsPossesssing && possession.CurrentPossession.gameObject == gameObject)
         {
             return;
         }
-        else
-        {
-            BehaveLikeAnNPC();
-        }
+
+        BehaveLikeAnNPC();
     }
 
     private void BehaveLikeAnNPC()
     {
-
         var enteredState = previousState.GetType() != currentState.GetType();
         switch (currentState)
         {
@@ -86,7 +90,7 @@ public class Enemy : MonoBehaviour
                         var target = possessableInSight.gameObject.transform.position;
                         var direction = possessableInSight.gameObject.transform.position - transform.position;
                         var directionNormalized = direction.normalized;
-                        characterController.Move(Time.deltaTime * 4 /*speed*/ * directionNormalized);
+                        walker.WalkInDirection(directionNormalized);
                         transform.LookAt(target);
 
                         if (IsInAttackDistance(possessableInSight.gameObject.transform))
@@ -175,9 +179,7 @@ public class Enemy : MonoBehaviour
         var possessableInSight = GetAlivePossessableInSight();
         if (possessableInSight != null && IsInAttackDistance(possessableInSight.transform))
         {
-            Debug.Log("Kill " + possessableInSight.name);
             possessableInSight.Die();
-
             OnAttackHit.Invoke(this);
         }
         else
@@ -196,7 +198,7 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         SetState(new Attacking());
-        animator.SetTrigger("Attack");
+        attacker.Attack();
         StartCoroutine(PerformAttackAfterCharge(0.87f, () =>
         {
             SetState(new Idle());

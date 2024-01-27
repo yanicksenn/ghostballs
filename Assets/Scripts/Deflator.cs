@@ -18,12 +18,14 @@ public class Deflator : MonoBehaviour
     {
         possession.OnPossessEvent.AddListener(OnPossess);
         possession.OnUnpossessEvent.AddListener(OnUnpossess);
+        possessable.OnDeathEvent.AddListener(OnDeath);
     }
 
     private void OnDisable()
     {
         possession.OnPossessEvent.RemoveListener(OnPossess);
         possession.OnUnpossessEvent.RemoveListener(OnUnpossess);
+        possessable.OnDeathEvent.RemoveListener(OnDeath);
     }
 
     private void OnUnpossess(Possessable otherPossessable)
@@ -37,9 +39,16 @@ public class Deflator : MonoBehaviour
 
     private void OnPossess(Possessable otherPossessable)
     {
-        if (possessable == otherPossessable){
+        if (possessable == otherPossessable)
+        {
             animator.ResetTrigger("Deflate");
             animator.SetTrigger("Inflate");
         }
+    }
+
+    private void OnDeath(Killable killable)
+    {
+        animator.ResetTrigger("Inflate");
+        animator.SetTrigger("Deflate");
     }
 }
