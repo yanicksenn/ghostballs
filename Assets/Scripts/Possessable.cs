@@ -16,10 +16,6 @@ public class Possessable : Killable
         + "is being possessed again. The fallback possession cannot die.")]
     private bool possessAtStart;
 
-    [SerializeField, Tooltip("Indicating that this GameObject is being possessed. "
-        + "May be null.")]
-    private GameObject possessionIndicator;
-
     [SerializeField, Space]
     private float movementSpeed;
 
@@ -39,6 +35,7 @@ public class Possessable : Killable
 
     private Camera camera;
     private CharacterController characterController;
+    private Animator animator;
 
     public void Possess()
     {
@@ -61,7 +58,7 @@ public class Possessable : Killable
     {
         camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
-        possessionIndicator.SetActive(false);
+        animator = GetComponent<Animator>();
 
         if (possessAtStart)
         {
@@ -102,6 +99,9 @@ public class Possessable : Killable
         var z = Input.GetAxisRaw("Vertical");
         var direction = new Vector3(x, 0, z).normalized;
         characterController.Move(Time.deltaTime * movementSpeed * direction);
+        if (animator != null) {
+            animator.SetBool("isWalking", direction.sqrMagnitude >= Mathf.Epsilon);
+        }
 
         // Rotate character towards mouse position.
         var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
@@ -141,8 +141,6 @@ public class Possessable : Killable
 
     private void OnPossessThis()
     {
-        if (possessionIndicator == null) return;
-        possessionIndicator.SetActive(true);
     }
 
     private void OnUnpossess(Possessable possessable)
@@ -156,8 +154,6 @@ public class Possessable : Killable
 
     private void OnUnpossessThis()
     {
-        if (possessionIndicator == null) return;
-        possessionIndicator.SetActive(false);
     }
 
     [Serializable]
