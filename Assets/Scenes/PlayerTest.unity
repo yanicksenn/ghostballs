@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 1779014597}
   - component: {fileID: 1779014596}
   - component: {fileID: 1779014595}
+  - component: {fileID: 1779014602}
   - component: {fileID: 1779014601}
   m_Layer: 0
   m_Name: Enemy
@@ -507,21 +508,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a64bdcb5b59d4d2b9ed6d5445f232c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
-  possessAtStart: 0
-  movementSpeed: 3
-  projectileSpawnLocation: {fileID: 0}
-  projectileTemplate: {fileID: 0}
-  onPossessEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onUnpossessEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  isDead: 0
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1779014595}
+      - m_Target: {fileID: 1779014601}
         m_TargetAssemblyTypeName: TestDeath, Assembly-CSharp
         m_MethodName: MakeVisiblyDead
         m_Mode: 1
@@ -533,6 +524,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
+  possessAtStart: 0
+  movementSpeed: 3
+  projectileSpawnLocation: {fileID: 0}
+  projectileTemplate: {fileID: 0}
+  onPossessEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnpossessEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &1779014596
 CharacterController:
   m_ObjectHideFlags: 0
@@ -661,6 +663,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7828e795e4a384809bff93bdba4c8d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1779014602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779014594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5fc13c1f77944a6a950dec8dfe671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
+  visionDistance: 4
+  attackDistance: 2
 --- !u!1001 &1856811990
 PrefabInstance:
   m_ObjectHideFlags: 0
