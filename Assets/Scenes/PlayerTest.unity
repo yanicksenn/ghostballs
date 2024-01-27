@@ -434,6 +434,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1276497042 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4151108801238041906, guid: a852588bccd80410f880d5f9768324fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1077775416937264092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7828e795e4a384809bff93bdba4c8d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1779014595 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7206621946686392902, guid: 78328c172777240b2a4225b4010d0bff,
@@ -891,6 +903,76 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1276497042}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1276497042}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Inflate
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Deflate
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TestDeath, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TestDeath, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onPossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191794566618839781, guid: a852588bccd80410f880d5f9768324fb,
+        type: 3}
+      propertyPath: onUnpossessEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
