@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class Possessable : Killable
@@ -36,6 +37,8 @@ public class Possessable : Killable
     private Camera camera;
     private CharacterController characterController;
     private Animator animator;
+    private PlayersControls playersControls;
+    private float attackCoolDown = 0.0f;
 
     public void Possess()
     {
@@ -59,6 +62,7 @@ public class Possessable : Killable
         camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        playersControls = new PlayersControls();
 
         if (possessAtStart)
         {
@@ -70,12 +74,14 @@ public class Possessable : Killable
     {
         possession.OnPossessEvent.AddListener(OnPossess);
         possession.OnUnpossessEvent.AddListener(OnUnpossess);
+        playersControls.Enable();
     }
 
     private void OnDisable()
     {
         possession.OnPossessEvent.RemoveListener(OnPossess);
         possession.OnUnpossessEvent.RemoveListener(OnUnpossess);
+        playersControls.Disable();
     }
 
     private void Start()
@@ -88,6 +94,7 @@ public class Possessable : Killable
             Possess();
         }
     }
+
     private void Update()
     {
         if (IsDead) return;
@@ -96,30 +103,46 @@ public class Possessable : Killable
         // Currently, a possessable controls whether you can move via anywhere. 
         // Maybe we need to change this at some point if we want unpossessed 
         // characters to be able to move freely around.
-        var x = Input.GetAxisRaw("Horizontal");
-        var z = Input.GetAxisRaw("Vertical");
-        var direction = new Vector3(x, 0, z).normalized;
+        var move = playersControls.Controls.Movement.ReadValue<Vector2>();
+        var direction = new Vector3(move.x, 0, move.y).normalized;
         characterController.Move(Time.deltaTime * movementSpeed * direction);
-        if (animator != null) {
+        if (animator != null)
+        {
             animator.SetBool("isWalking", direction.sqrMagnitude >= Mathf.Epsilon);
         }
 
-        // Rotate character towards mouse position.
-        var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
-        var groundPlane = new Plane(Vector3.up, Vector3.zero);
-        if (groundPlane.Raycast(cameraRay, out var rayLength))
+        // TODO: if you have a gamepad connected, the mouse scheme won't work for now.
+        // Find a way to correctly switch devices. See maybe https://www.youtube.com/watch?v=koRgU2dC5Po&t=988s
+        if (Gamepad.current != null)
         {
-            Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            var aim = playersControls.Controls.Aim.ReadValue<Vector2>();
+            if (!aim.Equals(Vector2.zero))
+            {
+                transform.forward = new Vector3(aim.x, 0, aim.y);
+            }
         }
+        else
+        {
+            var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
+            var groundPlane = new Plane(Vector3.up, Vector3.zero);
+            if (groundPlane.Raycast(cameraRay, out var rayLength))
+            {
+                Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+                transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            }
+        }
+
 
         // Shoot possesion projection towards mouse possition. If no projectile
         // is serialized, then shooting is not possible.
-        if (Input.GetMouseButtonDown(0 /* RMB */) && projectileTemplate != null)
+        var shootButtonPressed = playersControls.Controls.Shoot.ReadValue<float>() == 1.0;
+        if (shootButtonPressed && attackCoolDown <= 0.0 && projectileTemplate != null)
         {
+            attackCoolDown = 0.5f;
             var projectile = Instantiate(projectileTemplate);
             projectile.transform.position = projectileSpawnLocation.transform.position;
             projectile.transform.forward = transform.forward;
+            //projectile.transform.forward = new Vector3(lookX, 0, lookZ);
             projectile.OnCollide.AddListener((collision) =>
             {
                 var possessable = collision.gameObject.GetComponent<Possessable>();
@@ -129,6 +152,7 @@ public class Possessable : Killable
                 }
             });
         }
+        attackCoolDown -= Time.deltaTime;
     }
 
     private void OnPossess(Possessable possessable)
