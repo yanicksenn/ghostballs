@@ -89,6 +89,10 @@ public class Possessable : Killable
             {
                 transform.forward = new Vector3(aim.x, 0, aim.y);
             }
+            else if (!direction.Equals(Vector3.zero))
+            {
+                transform.forward = direction;
+            }
         }
         else
         {
@@ -99,6 +103,7 @@ public class Possessable : Killable
                 Vector3 pointToLook = cameraRay.GetPoint(rayLength);
                 transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
+            // TODO: implement facing the walking direction if you don't move the mouse
         }
 
 
