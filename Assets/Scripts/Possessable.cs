@@ -105,7 +105,7 @@ public class Possessable : Killable
         // characters to be able to move freely around.
         var move = playersControls.Controls.Movement.ReadValue<Vector2>();
         var direction = new Vector3(move.x, 0, move.y).normalized;
-        characterController.Move(Time.deltaTime * movementSpeed * direction);
+        characterController.SimpleMove(movementSpeed * direction);
         if (animator != null)
         {
             animator.SetBool("isWalking", direction.sqrMagnitude >= Mathf.Epsilon);
