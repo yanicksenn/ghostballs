@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TestPossessionManager : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class TestPossessionManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             possession.CurrentPossession.Die();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
