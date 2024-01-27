@@ -34,7 +34,7 @@ public class Possessable : Killable
     private PossessableEvent onUnpossessEvent = new();
     public PossessableEvent OnUnpossessEvent => onUnpossessEvent;
 
-    private Camera camera;
+    private new Camera camera;
     private CharacterController characterController;
     private Animator animator;
     private PlayersControls playersControls;
