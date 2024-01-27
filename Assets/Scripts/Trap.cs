@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private bool trapActivated = false;
     void OnCollisionEnter(Collision other)
     {
         Killable killable = other.gameObject.GetComponent<Killable>();
-        if(killable!=null){
+        GameObject body= other.gameObject;
+        Debug.Log("Trap collided!");
+        if(!trapActivated && killable!=null){
              Debug.Log("Trap triggered!");
              killable.Die();
+             MovePlayerToCenter(body);
+             trapActivated=true;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void MovePlayerToCenter(GameObject player)
     {
-        
+        // Calculate the center position of the trap (you might need to adjust this based on your trap's position)
+        Vector3 trapCenter = transform.position;
+
+        // Set the player's position to the center of the trap
+        player.transform.position = trapCenter;
     }
 }
