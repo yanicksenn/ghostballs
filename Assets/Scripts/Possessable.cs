@@ -16,10 +16,6 @@ public class Possessable : MonoBehaviour
         + "is being possessed again. The fallback possession cannot die.")]
     private bool possessAtStart;
 
-    [SerializeField, Tooltip("Indicating that this GameObject is being possessed. "
-        + "May be null.")]
-    private GameObject possessionIndicator;
-
     [SerializeField, Space]
     private float movementSpeed;
 
@@ -71,7 +67,6 @@ public class Possessable : MonoBehaviour
     {
         camera = FindObjectOfType<Camera>();
         characterController = GetComponent<CharacterController>();
-        possessionIndicator.SetActive(false);
 
         if (possessAtStart)
         {
@@ -151,8 +146,6 @@ public class Possessable : MonoBehaviour
 
     private void OnPossessThis()
     {
-        if (possessionIndicator == null) return;
-        possessionIndicator.SetActive(true);
     }
 
     private void OnUnpossess(Possessable possessable)
@@ -166,8 +159,6 @@ public class Possessable : MonoBehaviour
 
     private void OnUnpossessThis()
     {
-        if (possessionIndicator == null) return;
-        possessionIndicator.SetActive(false);
     }
 
     [Serializable]
