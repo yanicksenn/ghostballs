@@ -56,12 +56,18 @@ public class Attacker : MonoBehaviour
     {
         // TODO: if you have a gamepad connected, the mouse scheme won't work for now.
         // Find a way to correctly switch devices. See maybe https://www.youtube.com/watch?v=koRgU2dC5Po&t=988s
+        var move = playersControls.Controls.Movement.ReadValue<Vector2>();
+        var direction = new Vector3(move.x, 0, move.y).normalized;
         if (Gamepad.current != null)
         {
             var aim = playersControls.Controls.Aim.ReadValue<Vector2>();
             if (!aim.Equals(Vector2.zero))
             {
                 transform.forward = new Vector3(aim.x, 0, aim.y);
+            }
+            else if (!direction.Equals(Vector3.zero))
+            {
+                transform.forward = direction;
             }
         }
         else
@@ -73,6 +79,7 @@ public class Attacker : MonoBehaviour
                 Vector3 pointToLook = cameraRay.GetPoint(rayLength);
                 transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
+            // TODO: implement facing the walking direction if you don't move the mouse
         }
 
         // Shoot possesion projection towards mouse possition. If no projectile
