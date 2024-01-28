@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8b3a3ee953c4e1cac98ed2576ff069, type: 3}
   m_Name: Scene Selector
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 102900000, guid: e277f1377efeb486cb9149ccb007efe0, type: 3}
-  - {fileID: 102900000, guid: 04c09ea42789543f58b71fe64846f81e, type: 3}
-  - {fileID: 102900000, guid: 4ee6a6d80569e4187b7b688cd52a88e2, type: 3}
-  - {fileID: 102900000, guid: bf354b868d5bb44cf9188d5b52116a4e, type: 3}
-  - {fileID: 102900000, guid: 6256a972e4ed54f19b33d5e4617b6ed6, type: 3}
+  levelNames:
+  - Level 1
+  - Level 2
+  - Level 3
+  - Level 4
+  - Level 5
   currentLevelIndex: 0
