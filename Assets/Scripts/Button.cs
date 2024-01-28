@@ -17,23 +17,26 @@ public class Button : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider collider)
     {
-        if (!isPressed)
+        if (!isPressed && collider.gameObject.GetComponent<Walker>() != null)
         {
-            isPressed = true;
-            animator.SetBool("isPressed", true);
-            target.TriggerButtonEffect();
+            PressButton();
         }
     }
 
-    void OnCollisionEnter()
+    void OnCollisionEnter(Collision collision)
     {
-        if (!isPressed)
+        if (!isPressed && collision.gameObject.GetComponent<Walker>() != null)
         {
-            isPressed = true;
-            animator.SetBool("isPressed", true);
-            target.TriggerButtonEffect();
+            PressButton();
         }
+    }
+
+    private void PressButton()
+    {
+        isPressed = true;
+        animator.SetBool("isPressed", true);
+        target.TriggerButtonEffect();
     }
 }
