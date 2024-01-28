@@ -50,6 +50,7 @@ public class Attacker : MonoBehaviour
         {
             PossessedBehaviour();
         }
+        currentAttackCoolDown -= Time.deltaTime;
     }
 
     private void PossessedBehaviour()
@@ -89,6 +90,5 @@ public class Attacker : MonoBehaviour
         {
             Attack();
         }
-        currentAttackCoolDown -= Time.deltaTime;
     }
 }

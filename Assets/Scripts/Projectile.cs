@@ -14,6 +14,11 @@ public class Projectile : MonoBehaviour
     [SerializeField, Tooltip("Indicates the time to live in seconds until the projectile is destroyed.")]
     private float ttl = 3;
 
+    [SerializeField]
+    private bool remainInPlaceWhenHit;
+
+    private bool hit;
+
     private void Awake()
     {
         StartCoroutine(DestroyWhenTtlIsReached());
@@ -25,18 +30,29 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        if (hit) return;
+
         transform.position += Time.deltaTime * movementSpeed * transform.forward;
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (hit) { return; }
+        hit = true;
+
         OnCollide.Invoke(collision);
-        Destroy(gameObject);
+        if (remainInPlaceWhenHit) {
+            transform.parent = collision.collider.gameObject.transform;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator DestroyWhenTtlIsReached()
     {
         yield return new WaitForSeconds(ttl);
-        Destroy(gameObject);
+        if (!hit || !remainInPlaceWhenHit) {
+            Destroy(gameObject);
+        }
     }
 }

@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
                 {
                     if (enteredState)
                     {
-                        Attack();
+                        StartCoroutine(Attack());
                         return;
                     }
                 }
@@ -173,36 +173,19 @@ public class Enemy : MonoBehaviour
         return sqrDistance <= Mathf.Pow(attackDistance, 2);
     }
 
-    private IEnumerator PerformAttackAfterCharge(float chargeDuration, Action completionAction)
-    {
-        yield return new WaitForSeconds(chargeDuration);
-        var possessableInSight = GetAlivePossessableInSight();
-        if (possessableInSight != null && IsInAttackDistance(possessableInSight.transform))
-        {
-            possessableInSight.Die();
-            OnAttackHit.Invoke(this);
-        }
-        else
-        {
-            OnAttackMiss.Invoke(this);
-        }
-        completionAction.Invoke();
-    }
-
     private void SetState(State newState)
     {
         previousState = currentState;
         currentState = newState;
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
         SetState(new Attacking());
         attacker.Attack();
-        StartCoroutine(PerformAttackAfterCharge(0.87f, () =>
-        {
-            SetState(new Idle());
-        }));
+        Debug.Log("Attack (Enemy)");
+        yield return new WaitForSeconds(2 /* Cooldown before trying to attack again. */);
+        SetState(new Idle());
     }
 
 
