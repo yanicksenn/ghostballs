@@ -67,6 +67,15 @@ public class Inflammable : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        Inflammable otherInflammable = collider.gameObject.GetComponent<Inflammable>();
+        if (otherInflammable != null && otherInflammable.isBurning)
+        {
+            StartFire();
+        }
+    }
+
     void OnCollisionEnter(Collision collider)
     {
         Inflammable otherInflammable = collider.gameObject.GetComponent<Inflammable>();
