@@ -23,29 +23,33 @@ public class Inflammable : MonoBehaviour
     [SerializeField]
     private GameObject firePrefab;
 
-    private ParticleSystem firePaticles;
+    private ParticleSystem fireParticles;
+
+    private Animator fireLightAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject firePaticlesObject = Instantiate(firePrefab, transform) as GameObject;
-        firePaticles = firePaticlesObject.GetComponent<ParticleSystem>();
+        GameObject fireParticlesObject = Instantiate(firePrefab, transform) as GameObject;
+        fireParticles = fireParticlesObject.GetComponent<ParticleSystem>();
         var objectSize = GetComponent<Renderer>().bounds.size;
         var objectScale = transform.localScale;
         Debug.Log("Object size: " + objectSize.x + "," + objectSize.y + "," + objectSize.z);
-        firePaticlesObject.transform.localScale = new Vector3(
+        fireParticlesObject.transform.localScale = new Vector3(
                 3 * objectSize.x / objectScale.x,
                 3 * objectSize.y / objectScale.y,
                 3 * objectSize.z / objectScale.z
             );
-        firePaticlesObject.transform.Translate(new Vector3(0, objectSize.y / 3, 0), Space.World);
+        fireParticlesObject.transform.Translate(new Vector3(0, objectSize.y / 3, 0), Space.World);
+        fireLightAnimator = fireParticlesObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
+
         if (isBurning)
         {
-            firePaticles.Play();
+            PlayFire();
         }
         else
         {
-            firePaticles.Stop();
+            StopFire();
         }
     }
 
@@ -65,7 +69,6 @@ public class Inflammable : MonoBehaviour
 
     void OnCollisionEnter(Collision collider)
     {
-        Debug.Log("Test");
         Inflammable otherInflammable = collider.gameObject.GetComponent<Inflammable>();
         if (otherInflammable != null && otherInflammable.isBurning)
         {
@@ -78,7 +81,7 @@ public class Inflammable : MonoBehaviour
         if (!isBurning && (killable == null || !killable.IsDead))
         {
             isBurning = true;
-            firePaticles.Play();
+            PlayFire();
             if (timeToKill != -1f && killable != null && runningKillCoroutine == null)
             {
                 runningKillCoroutine = StartCoroutine(KillWhenTimeToKillIsReached(killable));
@@ -91,7 +94,7 @@ public class Inflammable : MonoBehaviour
         if (isBurning)
         {
             isBurning = false;
-            firePaticles.Stop();
+            StopFire();
             if (runningKillCoroutine != null)
             {
                 StopCoroutine(runningKillCoroutine);
@@ -105,6 +108,18 @@ public class Inflammable : MonoBehaviour
         }
     }
 
+    private void PlayFire()
+    {
+        fireParticles.Play();
+        fireLightAnimator.SetBool("isOn", true);
+    }
+
+    private void StopFire()
+    {
+        fireParticles.Stop();
+        fireLightAnimator.SetBool("isOn", false);
+    }
+
     private IEnumerator KillWhenTimeToKillIsReached(Killable killable)
     {
         yield return new WaitForSeconds(timeToKill);
@@ -115,6 +130,6 @@ public class Inflammable : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToStopBurningWhenKilled);
         isBurning = false;
-        firePaticles.Stop();
+        StopFire();
     }
 }
