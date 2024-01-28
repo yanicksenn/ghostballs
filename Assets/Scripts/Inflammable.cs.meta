@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - firePrefab: {fileID: 2920717650170635656, guid: 735df7e0165a54f139d2b9add1f7fcf6,
+  - firePrefab: {fileID: 8407230002061172552, guid: 8ca2aef613fc7459eabdc92eb6345ca3,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}

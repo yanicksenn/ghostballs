@@ -5,15 +5,15 @@ public class Inflammable : MonoBehaviour
 {
 
     [SerializeField, Tooltip("Indicates whether this object is currently burning.")]
-    private bool isBurning;
+    private bool isBurning = false;
 
     [SerializeField, Tooltip("Indicates how long this object can stay on fire before it is killed. "
         + "Set to -1 to never die from fire.")]
-    private float timeToKill;
+    private float timeToKill = -1;
 
     [SerializeField, Tooltip("Indicates how long this object will keep burning after it is killed. "
         + "Set to -1 to keep burning indefinitely.")]
-    private float timeToStopBurningWhenKilled;
+    private float timeToStopBurningWhenKilled = 0;
 
     private Coroutine runningKillCoroutine = null;
     private Coroutine runningStopBurningCoroutine = null;
@@ -30,10 +30,21 @@ public class Inflammable : MonoBehaviour
     {
         GameObject firePaticlesObject = Instantiate(firePrefab, transform) as GameObject;
         firePaticles = firePaticlesObject.GetComponent<ParticleSystem>();
-        firePaticlesObject.transform.parent = transform;
-        if (isBurning) {
+        var objectSize = GetComponent<Renderer>().bounds.size;
+        var objectScale = transform.localScale;
+        Debug.Log("Object size: " + objectSize.x + "," + objectSize.y + "," + objectSize.z);
+        firePaticlesObject.transform.localScale = new Vector3(
+                3 * objectSize.x / objectScale.x,
+                3 * objectSize.y / objectScale.y,
+                3 * objectSize.z / objectScale.z
+            );
+        firePaticlesObject.transform.Translate(new Vector3(0, objectSize.y / 3, 0), Space.World);
+        if (isBurning)
+        {
             firePaticles.Play();
-        } else {
+        }
+        else
+        {
             firePaticles.Stop();
         }
     }
