@@ -7,14 +7,31 @@ public class LevelFinish : MonoBehaviour
 {
     [SerializeField]
     private SceneSelector sceneSelector;
-    
+
     [SerializeField]
     private Possession possession;
+    private PlayersControls playersControls;
+
+    private void OnEnable()
+    {
+        playersControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playersControls.Disable();
+    }
+
+    private void Awake()
+    {
+        playersControls = new PlayersControls();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        var resetButtonPressed = playersControls.Controls.Reset.ReadValue<float>() == 1.0;
+        if (resetButtonPressed)
         {
             sceneSelector.ReloadCurrentLevel();
         }
