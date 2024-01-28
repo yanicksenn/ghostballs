@@ -74,7 +74,7 @@ public class Attacker : MonoBehaviour
         else
         {
             var cameraRay = camera.ScreenPointToRay(Input.mousePosition);
-            var groundPlane = new Plane(Vector3.up, Vector3.zero);
+            var groundPlane = new Plane(Vector3.up, new Vector3(0, 2, 0));
             if (groundPlane.Raycast(cameraRay, out var rayLength))
             {
                 Vector3 pointToLook = cameraRay.GetPoint(rayLength);
