@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 3961120778353693247}
   - component: {fileID: 3877015970408636711}
   - component: {fileID: 6696916971863059479}
+  - component: {fileID: 4663781080423110965}
   m_Layer: 0
   m_Name: AxeEnemy
   m_TagString: Untagged
@@ -298,6 +299,7 @@ MonoBehaviour:
         m_CallState: 2
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   possessAtStart: 0
+  immortalWhenUnpossesed: 0
 --- !u!114 &368279202161392287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +357,7 @@ MonoBehaviour:
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   visionDistance: 4
   attackDistance: 2
+  doesNotWalk: 0
   onEnrage:
     m_PersistentCalls:
       m_Calls: []
@@ -413,6 +416,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 4
+--- !u!54 &4663781080423110965
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991105499247035126}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6983495163270972004
 GameObject:
   m_ObjectHideFlags: 0

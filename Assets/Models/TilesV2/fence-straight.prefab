@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4372733977375508508}
   - component: {fileID: 1920164190046839767}
   - component: {fileID: 3162826402962921597}
+  - component: {fileID: 1072167076168419603}
   m_Layer: 0
   m_Name: fence-straight
   m_TagString: Untagged
@@ -118,3 +119,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03b80f5e9e0e4885bc539e4423ca7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1072167076168419603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286604458726653591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06efb8e986f2a421b9823b581b63ba0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBurning: 0
+  timeToKill: -1
+  timeToStopBurningWhenKilled: 0
+  firePrefab: {fileID: 8407230002061172552, guid: 8ca2aef613fc7459eabdc92eb6345ca3,
+    type: 3}
