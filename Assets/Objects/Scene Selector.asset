@@ -18,4 +18,5 @@ MonoBehaviour:
   - Level 3
   - Level 4
   - Level 5
+  - End Level
   currentLevelIndex: 0
