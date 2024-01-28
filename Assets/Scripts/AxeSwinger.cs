@@ -10,9 +10,11 @@ public class AxeSwinger : MonoBehaviour {
     private float delayOfImpact = 1;
 
     private Animator animator;
+    private Axe axe;
 
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
+        axe = GetComponentInChildren<Axe>();
     }
 
     public void Swing()
@@ -23,19 +25,8 @@ public class AxeSwinger : MonoBehaviour {
     }
 
     private IEnumerator PerformHit() {
+        axe.enabled = true;
         yield return new WaitForSeconds(delayOfImpact);
-        
-        var hits = Physics.SphereCastAll(transform.position + (transform.forward * 2), radiusOfImpact, transform.forward);
-        foreach (var hit in hits) {
-            if (hit.collider.gameObject == gameObject) {
-                continue;
-            }
-
-            if (!hit.collider.gameObject.TryGetComponent<Killable>(out var killable)) {
-                continue;
-            }
-
-            killable.Die();
-        }
+        axe.enabled = false;
     }
 }

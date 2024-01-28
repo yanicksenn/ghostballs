@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AxeEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8045118414806901686, guid: 78328c172777240b2a4225b4010d0bff,
+        type: 3}
+      propertyPath: visionDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -183,8 +183,7 @@ public class Enemy : MonoBehaviour
     {
         SetState(new Attacking());
         attacker.Attack();
-        Debug.Log("Attack (Enemy)");
-        yield return new WaitForSeconds(2 /* Cooldown before trying to attack again. */);
+        yield return new WaitForSeconds(1 /* Cooldown before trying to attack again. */);
         SetState(new Idle());
     }
 
