@@ -11,8 +11,11 @@ public class Walker : MonoBehaviour
     private Animator animator;
     private PlayersControls playersControls;
 
+    private bool hasMovedThisFrame = false;
+
     public void WalkInDirection(Vector3 direction)
     {
+        hasMovedThisFrame = true;
         characterController.SimpleMove(movementSpeed * direction);
         if (animator != null)
         {
@@ -40,7 +43,6 @@ public class Walker : MonoBehaviour
 
     private void Update()
     {
-
         if (possessable.IsDead) return;
         if (possessable.IsPossessed)
         {
@@ -48,5 +50,10 @@ public class Walker : MonoBehaviour
             var direction = new Vector3(move.x, 0, move.y).normalized;
             WalkInDirection(direction);
         }
+        if (!hasMovedThisFrame)
+        {
+            WalkInDirection(new Vector3(0, 0, 0));
+        }
+        hasMovedThisFrame = false;
     }
 }
