@@ -99,7 +99,7 @@ MonoBehaviour:
   onHit:
     m_PersistentCalls:
       m_Calls: []
-  movementSpeed: 5
+  movementSpeed: 7
   ttl: 10
   remainInPlaceWhenHit: 1
 --- !u!1 &1279645127759763651
