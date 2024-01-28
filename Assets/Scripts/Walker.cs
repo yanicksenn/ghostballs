@@ -43,8 +43,7 @@ public class Walker : MonoBehaviour
 
     private void Update()
     {
-        if (possessable.IsDead) return;
-        if (possessable.IsPossessed)
+        if (possessable.IsPossessed && !possessable.IsDead)
         {
             var move = playersControls.Controls.Movement.ReadValue<Vector2>();
             var direction = new Vector3(move.x, 0, move.y).normalized;
