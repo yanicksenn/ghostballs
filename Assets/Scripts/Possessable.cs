@@ -12,10 +12,15 @@ public class Possessable : Killable
     [SerializeField]
     private bool possessAtStart;
 
+    [SerializeField]
+    private bool immortalWhenUnpossesed;
+
+    private new Collider collider;
     private PlayersControls playersControls;
 
     private void Awake()
     {
+        collider = GetComponent<Collider>();
         playersControls = new PlayersControls();
         if (possessAtStart)
         {
@@ -25,12 +30,16 @@ public class Possessable : Killable
 
     private void OnEnable()
     {
+        possession.OnPossessEvent.AddListener(OnPossess);
+        possession.OnUnpossessEvent.AddListener(OnUnpossess);
         OnDeathEvent.AddListener(OnDeath);
         playersControls.Enable();
     }
 
     private void OnDisable()
     {
+        possession.OnPossessEvent.RemoveListener(OnPossess);
+        possession.OnUnpossessEvent.RemoveListener(OnUnpossess);
         OnDeathEvent.RemoveListener(OnDeath);
         playersControls.Disable();
     }
@@ -46,6 +55,13 @@ public class Possessable : Killable
         }
     }
 
+    public override void Die()
+    {
+        if (IsPossessed || !immortalWhenUnpossesed) {
+            base.Die();
+        }
+    }
+
     private void OnDeath(Killable killable)
     {
         if (IsPossessed)
@@ -56,6 +72,20 @@ public class Possessable : Killable
 
     public void Possess() {
         possession.Possess(this);
+    }
+
+    private void OnPossess(Possessable otherPossessable)
+    {
+        if (otherPossessable == this && immortalWhenUnpossesed) {
+            collider.enabled = true;
+        }
+    }
+
+    private void OnUnpossess(Possessable otherPossessable)
+    {
+        if (otherPossessable == this && immortalWhenUnpossesed) {
+            collider.enabled = false;
+        }
     }
 
     [Serializable]

@@ -27,14 +27,23 @@ public class Inflammable : MonoBehaviour
 
     private Animator fireLightAnimator;
 
+    private new Renderer renderer;
+    
+    private void Awake() {
+        renderer = GetComponent<Renderer>();
+        if (renderer == null) {
+            renderer = GetComponentInChildren<Renderer>();
+        }
+        killable = GetComponent<Killable>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject fireParticlesObject = Instantiate(firePrefab, transform) as GameObject;
         fireParticles = fireParticlesObject.GetComponent<ParticleSystem>();
-        var objectSize = GetComponent<Renderer>().bounds.size;
+        var objectSize = renderer.bounds.size;
         var objectScale = transform.localScale;
-        Debug.Log("Object size: " + objectSize.x + "," + objectSize.y + "," + objectSize.z);
         fireParticlesObject.transform.localScale = new Vector3(
                 3 * objectSize.x / objectScale.x,
                 3 * objectSize.y / objectScale.y,
@@ -51,11 +60,6 @@ public class Inflammable : MonoBehaviour
         {
             StopFire();
         }
-    }
-
-    void Awake()
-    {
-        killable = GetComponent<Killable>();
     }
 
     // Update is called once per frame

@@ -9,7 +9,6 @@ public class ArrowShooter : MonoBehaviour {
     private Projectile projectileTemplate;
 
     public void Shoot() {
-        Debug.Log("Shoot (ArrowShooter)");
         var projectile = Instantiate(projectileTemplate);
         projectile.transform.position = projectileSpawnLocation.transform.position;
         projectile.transform.forward = transform.forward;

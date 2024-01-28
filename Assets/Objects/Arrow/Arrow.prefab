@@ -96,11 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 840480e2c2b5e441f8ceb2626236acee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onCollide:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
   movementSpeed: 5
-  ttl: 3
+  ttl: 10
   remainInPlaceWhenHit: 1
 --- !u!1 &1279645127759763651
 GameObject:

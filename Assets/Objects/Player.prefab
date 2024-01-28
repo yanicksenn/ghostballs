@@ -138,6 +138,7 @@ MonoBehaviour:
       m_Calls: []
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
   possessAtStart: 1
+  immortalWhenUnpossesed: 1
 --- !u!114 &4750291982258160573
 MonoBehaviour:
   m_ObjectHideFlags: 0
