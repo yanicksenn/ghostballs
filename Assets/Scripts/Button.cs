@@ -26,4 +26,14 @@ public class Button : MonoBehaviour
             target.TriggerButtonEffect();
         }
     }
+
+    void OnCollisionEnter()
+    {
+        if (!isPressed)
+        {
+            isPressed = true;
+            animator.SetBool("isPressed", true);
+            target.TriggerButtonEffect();
+        }
+    }
 }
