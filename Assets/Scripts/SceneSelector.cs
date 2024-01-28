@@ -11,6 +11,7 @@ public class SceneSelector : ScriptableObject
 {
     public SceneAsset[] levels;
 
+    [SerializeField]
     private int currentLevelIndex = 0;
 
     public void ReloadCurrentLevel()
@@ -18,7 +19,8 @@ public class SceneSelector : ScriptableObject
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void LoadNextLevel() {
+    public void LoadNextLevel()
+    {
         currentLevelIndex++;
         SceneManager.LoadScene(levels[currentLevelIndex % levels.Length].name);
     }
