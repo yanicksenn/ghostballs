@@ -3,4 +3,4 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class CollisionEvent : UnityEvent<Collision> { }
+public class HitEvent : UnityEvent<GameObject> { }

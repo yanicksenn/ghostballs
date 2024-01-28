@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float attackDistance;
 
+    [SerializeField]
+    private bool doesNotWalk;
+
     [SerializeField, Space]
     private EnemyEvent onEnrage = new();
     public EnemyEvent OnEnrage => onEnrage;
@@ -90,7 +93,9 @@ public class Enemy : MonoBehaviour
                         var target = possessableInSight.gameObject.transform.position;
                         var direction = possessableInSight.gameObject.transform.position - transform.position;
                         var directionNormalized = direction.normalized;
-                        walker.WalkInDirection(directionNormalized);
+                        if (!doesNotWalk) {
+                            walker.WalkInDirection(directionNormalized);
+                        }
                         transform.LookAt(target);
 
                         if (IsInAttackDistance(possessableInSight.gameObject.transform))

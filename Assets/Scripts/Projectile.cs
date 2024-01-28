@@ -5,8 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
-    private CollisionEvent onCollide = new();
-    public CollisionEvent OnCollide => onCollide;
+    private HitEvent onHit = new();
+    public HitEvent OnHit => onHit;
 
     [SerializeField]
     private float movementSpeed;
@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnDisable() {
-        OnCollide.RemoveAllListeners();
+        OnHit.RemoveAllListeners();
     }
 
     void Update()
@@ -35,12 +35,29 @@ public class Projectile : MonoBehaviour
         transform.position += Time.deltaTime * movementSpeed * transform.forward;
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.TryGetComponent<Projectile>(out var _)) {
+            return;
+        }
+
+        if (hit) { return; }
+        hit = true;
+
+        OnHit.Invoke(collider.gameObject);
+        if (remainInPlaceWhenHit) {
+            transform.parent = collider.gameObject.transform;
+        } else {
+            Destroy(gameObject);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (hit) { return; }
         hit = true;
 
-        OnCollide.Invoke(collision);
+        OnHit.Invoke(collision.collider.gameObject);
         if (remainInPlaceWhenHit) {
             transform.parent = collision.collider.gameObject.transform;
         } else {

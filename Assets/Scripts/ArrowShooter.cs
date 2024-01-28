@@ -13,9 +13,9 @@ public class ArrowShooter : MonoBehaviour {
         var projectile = Instantiate(projectileTemplate);
         projectile.transform.position = projectileSpawnLocation.transform.position;
         projectile.transform.forward = transform.forward;
-        projectile.OnCollide.AddListener((collision) =>
+        projectile.OnHit.AddListener((gameObjectHit) =>
         {
-            if (collision.gameObject.TryGetComponent<Killable>(out var killable))
+            if (gameObjectHit.TryGetComponent<Killable>(out var killable))
             {
                 killable.Die();
             }

@@ -12,9 +12,9 @@ public class PossessionProjectileShooter : MonoBehaviour {
         var projectile = Instantiate(projectileTemplate);
         projectile.transform.position = projectileSpawnLocation.transform.position;
         projectile.transform.forward = transform.forward;
-        projectile.OnCollide.AddListener((collision) =>
+        projectile.OnHit.AddListener((gameObjectHit) =>
         {
-            if (collision.gameObject.TryGetComponent<Possessable>(out var possessable))
+            if (gameObjectHit.TryGetComponent<Possessable>(out var possessable))
             {
                 possessable.Possess();
             }
