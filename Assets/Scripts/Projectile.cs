@@ -40,6 +40,9 @@ public class Projectile : MonoBehaviour
         if (collider.gameObject.TryGetComponent<Projectile>(out var _)) {
             return;
         }
+        if (collider.gameObject.TryGetComponent<FencePiece>(out var _)) {
+            return;
+        }
 
         if (hit) { return; }
         hit = true;

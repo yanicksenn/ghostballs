@@ -28,10 +28,12 @@ public class Inflammable : MonoBehaviour
     private Animator fireLightAnimator;
 
     private new Renderer renderer;
-    
-    private void Awake() {
+
+    private void Awake()
+    {
         renderer = GetComponent<Renderer>();
-        if (renderer == null) {
+        if (renderer == null)
+        {
             renderer = GetComponentInChildren<Renderer>();
         }
         killable = GetComponent<Killable>();
@@ -65,7 +67,7 @@ public class Inflammable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isBurning && killable != null && killable.IsDead && runningStopBurningCoroutine == null)
+        if (isBurning && killable != null && killable.IsDead && runningStopBurningCoroutine == null && timeToStopBurningWhenKilled != -1)
         {
             runningStopBurningCoroutine = StartCoroutine(StopBurningWhenTimeToStopBurningIsReached());
         }
@@ -95,10 +97,6 @@ public class Inflammable : MonoBehaviour
         {
             isBurning = true;
             PlayFire();
-            if (timeToKill != -1f && killable != null && runningKillCoroutine == null)
-            {
-                runningKillCoroutine = StartCoroutine(KillWhenTimeToKillIsReached(killable));
-            }
         }
     }
 
@@ -125,6 +123,10 @@ public class Inflammable : MonoBehaviour
     {
         fireParticles.Play();
         fireLightAnimator.SetBool("isOn", true);
+        if (timeToKill != -1f && killable != null && runningKillCoroutine == null)
+        {
+            runningKillCoroutine = StartCoroutine(KillWhenTimeToKillIsReached(killable));
+        }
     }
 
     private void StopFire()

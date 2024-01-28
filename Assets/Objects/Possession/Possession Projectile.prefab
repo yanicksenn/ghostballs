@@ -223,7 +223,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -268,11 +268,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 840480e2c2b5e441f8ceb2626236acee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onCollide:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
   movementSpeed: 20
   ttl: 3
+  remainInPlaceWhenHit: 0
 --- !u!95 &5939298221626383540
 Animator:
   serializedVersion: 5
