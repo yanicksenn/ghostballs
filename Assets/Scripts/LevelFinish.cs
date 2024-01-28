@@ -7,6 +7,9 @@ public class LevelFinish : MonoBehaviour
 {
     [SerializeField]
     private SceneSelector sceneSelector;
+    
+    [SerializeField]
+    private Possession possession;
 
     // Update is called once per frame
     void Update()
@@ -17,9 +20,13 @@ public class LevelFinish : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider collider)
     {
-        Destroy(gameObject);
-        sceneSelector.LoadNextLevel();
+        var possessible = collider.gameObject.GetComponent<Possessable>();
+        if (possessible != null && possessible == possession.FallbackPossessable && possessible.IsPossessed)
+        {
+            Destroy(gameObject);
+            sceneSelector.LoadNextLevel();
+        }
     }
 }
