@@ -7,7 +7,8 @@ public class Button : MonoBehaviour
 
     [SerializeField, Tooltip("The target of the button.")]
     private ButtonReceiver target;
-
+    [SerializeField]  
+    AudioManager audioManager;
     private Animator animator;
 
     private bool isPressed = false;
@@ -15,6 +16,8 @@ public class Button : MonoBehaviour
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        audioManager =GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+      
     }
 
     void OnTriggerEnter(Collider collider)
@@ -34,7 +37,8 @@ public class Button : MonoBehaviour
     }
 
     private void PressButton()
-    {
+    {   
+        audioManager.PlaySFX(audioManager.button);
         isPressed = true;
         animator.SetBool("isPressed", true);
         target.TriggerButtonEffect();

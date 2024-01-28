@@ -7,6 +7,9 @@ public class Possessable : Killable
 {
     [SerializeField]
     private Possession possession;
+    // things needed for audio
+    [SerializeField]  
+    AudioManager audioManager;
     public bool IsPossessed => possession.CurrentPossession == this;
 
     [SerializeField]
@@ -20,6 +23,8 @@ public class Possessable : Killable
 
     private void Awake()
     {
+        // make audio accessible
+        audioManager =GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         collider = GetComponent<Collider>();
         playersControls = new PlayersControls();
         if (possessAtStart)
@@ -71,6 +76,7 @@ public class Possessable : Killable
     }
 
     public void Possess() {
+        audioManager.PlaySFX(audioManager.pocessing);
         possession.Possess(this);
     }
 

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(menuName = "Scene Selector", fileName = "Scene Selector")]
 public class SceneSelector : ScriptableObject
 {
-    public SceneAsset[] levels;
+    public List<string> levelNames = new();
 
     [SerializeField]
     private int currentLevelIndex = 0;
@@ -17,7 +17,7 @@ public class SceneSelector : ScriptableObject
     public void LoadFirstLevel()
     {
         currentLevelIndex = 0;
-        SceneManager.LoadScene(levels[0].name);
+        SceneManager.LoadScene(levelNames[0]);
     }
 
     public void ReloadCurrentLevel()
@@ -28,6 +28,6 @@ public class SceneSelector : ScriptableObject
     public void LoadNextLevel()
     {
         currentLevelIndex++;
-        SceneManager.LoadScene(levels[currentLevelIndex % levels.Length].name);
+        SceneManager.LoadScene(levelNames[currentLevelIndex % levelNames.Count]);
     }
 }

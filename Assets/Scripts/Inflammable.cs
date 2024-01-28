@@ -29,6 +29,8 @@ public class Inflammable : MonoBehaviour
 
     private new Renderer renderer;
 
+    private bool isFireStarting = false;
+
     private void Awake()
     {
         renderer = GetComponent<Renderer>();
@@ -73,29 +75,32 @@ public class Inflammable : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerStay(Collider collider)
     {
         Inflammable otherInflammable = collider.gameObject.GetComponent<Inflammable>();
         if (otherInflammable != null && otherInflammable.isBurning)
         {
-            StartFire();
+            StartCoroutine(StartFire());
         }
     }
 
-    void OnCollisionEnter(Collision collider)
+    void OnCollisionStay(Collision collider)
     {
         Inflammable otherInflammable = collider.gameObject.GetComponent<Inflammable>();
         if (otherInflammable != null && otherInflammable.isBurning)
         {
-            StartFire();
+            StartCoroutine(StartFire());
         }
     }
 
-    void StartFire()
+    private IEnumerator StartFire()
     {
-        if (!isBurning && (killable == null || !killable.IsDead))
+        if (!isFireStarting && !isBurning && (killable == null || !killable.IsDead))
         {
+            isFireStarting = true;
+            yield return new WaitForSeconds(0.1f);
             isBurning = true;
+            isFireStarting = false;
             PlayFire();
         }
     }
