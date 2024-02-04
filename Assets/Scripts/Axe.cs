@@ -5,33 +5,20 @@ using UnityEngine;
 public class Axe : MonoBehaviour
 {
     private Killable thisKillable;
-    private bool lethal = false;
 
-    private void Awake() {
+    private void Awake()
+    {
         thisKillable = GetComponentInParent<Killable>();
     }
 
-    private void OnEnable()
+    private void OnTriggerEnter(Collider collider)
     {
-        lethal = true;
-    }
-
-    private void OnDisable()
-    {
-        lethal = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!lethal)
+        if (!collider.TryGetComponent<Killable>(out var killable))
         {
             return;
         }
-        if (!collision.collider.TryGetComponent<Killable>(out var killable))
+        if (killable == thisKillable)
         {
-            return;
-        }
-        if (killable == thisKillable) {
             return;
         }
 

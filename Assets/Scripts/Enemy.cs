@@ -93,7 +93,8 @@ public class Enemy : MonoBehaviour
                         var target = possessableInSight.gameObject.transform.position;
                         var direction = possessableInSight.gameObject.transform.position - transform.position;
                         var directionNormalized = direction.normalized;
-                        if (!doesNotWalk) {
+                        if (!doesNotWalk)
+                        {
                             walker.WalkInDirection(directionNormalized);
                         }
                         transform.LookAt(target);
@@ -111,12 +112,17 @@ public class Enemy : MonoBehaviour
                 {
                     if (enteredState)
                     {
-                        StartCoroutine(Attack());
+                        attacker.Attack();
+                        SetState(new Attacking());
                         return;
                     }
                 }
                 break;
             case Attacking _:
+                if (!attacker.IsAttacking())
+                {
+                    SetState(new Idle());
+                }
                 break;
             default:
                 break;
@@ -125,17 +131,17 @@ public class Enemy : MonoBehaviour
 
     private Possessable GetAlivePossessableInSight()
     {
-        var hits = Physics.SphereCastAll(transform.position, visionDistance, transform.forward);
+        var hits = Physics.OverlapSphere(transform.position, visionDistance);
         foreach (var hit in hits)
         {
             // Ignore collisions with myself.
-            if (hit.collider.gameObject == gameObject)
+            if (hit.GetComponent<Collider>().gameObject == gameObject)
             {
                 continue;
             }
 
             // If GameObject is not possessable, then we currently also don't attack it.
-            if (!hit.collider.gameObject.TryGetComponent<Possessable>(out var possessable))
+            if (!hit.GetComponent<Collider>().gameObject.TryGetComponent<Possessable>(out var possessable))
             {
                 continue;
             }
@@ -183,15 +189,6 @@ public class Enemy : MonoBehaviour
         previousState = currentState;
         currentState = newState;
     }
-
-    private IEnumerator Attack()
-    {
-        SetState(new Attacking());
-        attacker.Attack();
-        yield return new WaitForSeconds(1 /* Cooldown before trying to attack again. */);
-        SetState(new Idle());
-    }
-
 
     private abstract class State { }
 

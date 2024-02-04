@@ -8,7 +8,7 @@ public class Possessable : Killable
     [SerializeField]
     private Possession possession;
     // things needed for audio
-    [SerializeField]  
+    [SerializeField]
     AudioManager audioManager;
     public bool IsPossessed => possession.CurrentPossession == this;
 
@@ -21,10 +21,11 @@ public class Possessable : Killable
     private new Collider collider;
     private PlayersControls playersControls;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         // make audio accessible
-        audioManager =GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         collider = GetComponent<Collider>();
         playersControls = new PlayersControls();
         if (possessAtStart)
@@ -62,7 +63,8 @@ public class Possessable : Killable
 
     public override void Die()
     {
-        if (IsPossessed || !immortalWhenUnpossesed) {
+        if (IsPossessed || !immortalWhenUnpossesed)
+        {
             base.Die();
         }
     }
@@ -75,21 +77,24 @@ public class Possessable : Killable
         }
     }
 
-    public void Possess() {
+    public void Possess()
+    {
         audioManager.PlaySFX(audioManager.pocessing);
         possession.Possess(this);
     }
 
     private void OnPossess(Possessable otherPossessable)
     {
-        if (otherPossessable == this && immortalWhenUnpossesed) {
+        if (otherPossessable == this && immortalWhenUnpossesed)
+        {
             collider.enabled = true;
         }
     }
 
     private void OnUnpossess(Possessable otherPossessable)
     {
-        if (otherPossessable == this && immortalWhenUnpossesed) {
+        if (otherPossessable == this && immortalWhenUnpossesed)
+        {
             collider.enabled = false;
         }
     }

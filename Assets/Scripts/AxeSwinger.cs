@@ -1,32 +1,34 @@
 using System.Collections;
 using UnityEngine;
 
-public class AxeSwinger : MonoBehaviour {
-
+public class AxeSwinger : MonoBehaviour
+{
     [SerializeField]
-    private float radiusOfImpact = 1;
-
+    private float delayOfImpact = 1.0f;
     [SerializeField]
-    private float delayOfImpact = 1;
+    private float lethalTime = 0.2f;
 
     private Animator animator;
-    private Axe axe;
+    private GameObject axeDamage;
 
-    private void Awake() {
+    private void Awake()
+    {
         animator = GetComponentInChildren<Animator>();
-        axe = GetComponentInChildren<Axe>();
+        axeDamage = transform.Find("AxeDamage").gameObject;
     }
 
     public void Swing()
     {
-        animator.ResetTrigger("Attack");
-        animator.SetTrigger("Attack");
         StartCoroutine(PerformHit());
     }
 
-    private IEnumerator PerformHit() {
-        axe.enabled = true;
+    private IEnumerator PerformHit()
+    {
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(delayOfImpact);
-        axe.enabled = false;
+        axeDamage.SetActive(true);
+        yield return new WaitForSeconds(lethalTime);
+        axeDamage.SetActive(false);
     }
 }

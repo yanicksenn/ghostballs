@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 public class Attacker : MonoBehaviour
 {
-
     [SerializeField]
     private float attackCoolDown = 0.0f;
+    // Time for the attack action to be executed. Will block further aiming.
+    [SerializeField]
+    private float attackTime = 0.0f;
 
     [SerializeField]
     private UnityEvent onAttack = new();
@@ -15,15 +17,22 @@ public class Attacker : MonoBehaviour
     private new Camera camera;
     private Possessable possessable;
     private PlayersControls playersControls;
-    private float currentAttackCoolDown;
+    private float currentAttackCoolDown = 0.0f;
+    private float currentAttackTime = 0.0f;
 
     public void Attack()
     {
         if (currentAttackCoolDown <= 0.0)
         {
             currentAttackCoolDown = attackCoolDown;
+            currentAttackTime = attackTime;
             onAttack.Invoke();
         }
+    }
+
+    public bool IsAttacking()
+    {
+        return currentAttackTime >= 0.0;
     }
 
     private void Awake()
@@ -51,10 +60,14 @@ public class Attacker : MonoBehaviour
             PossessedBehaviour();
         }
         currentAttackCoolDown -= Time.deltaTime;
+        currentAttackTime -= Time.deltaTime;
     }
 
     private void PossessedBehaviour()
     {
+        // Don't allow turning during attack.
+        if (IsAttacking()) return;
+
         // TODO: if you have a gamepad connected, the mouse scheme won't work for now.
         // Find a way to correctly switch devices. See maybe https://www.youtube.com/watch?v=koRgU2dC5Po&t=988s
         var move = playersControls.Controls.Movement.ReadValue<Vector2>();
