@@ -10,7 +10,4 @@ public class TestDeath : MonoBehaviour {
     public void Inflate() {
         transform.localScale = new Vector3(transform.localScale.x, 1.0f, transform.localScale.z);
     }
-    public void DestroyOnDeath() {
-        Destroy(gameObject);
-    }
 }

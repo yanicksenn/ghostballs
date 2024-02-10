@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 1604699412117217686}
   - component: {fileID: 3047731466248753083}
   - component: {fileID: 5021139361541083767}
-  - component: {fileID: 1565485024963425813}
   - component: {fileID: -8973669606599391549}
   m_Layer: 0
   m_Name: fence-end
@@ -195,18 +194,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1565485024963425813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085548088654853667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7828e795e4a384809bff93bdba4c8d68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8973669606599391549
 MonoBehaviour:
   m_ObjectHideFlags: 0
