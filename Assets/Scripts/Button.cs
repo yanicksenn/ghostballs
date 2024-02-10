@@ -6,7 +6,7 @@ public class Button : MonoBehaviour
 {
 
     [SerializeField, Tooltip("The target of the button.")]
-    private ButtonReceiver target;
+    private List<ButtonReceiver> targets = new();
     [SerializeField]  
     AudioManager audioManager;
     private Animator animator;
@@ -41,6 +41,8 @@ public class Button : MonoBehaviour
         audioManager.PlaySFX(audioManager.button);
         isPressed = true;
         animator.SetBool("isPressed", true);
-        target.TriggerButtonEffect();
+        foreach (var target in targets) {
+            target.TriggerButtonEffect();
+        }
     }
 }

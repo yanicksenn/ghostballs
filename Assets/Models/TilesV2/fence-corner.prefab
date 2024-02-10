@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 5249589087219844883}
   - component: {fileID: 8473930633019654910}
   - component: {fileID: 3111527729733664413}
+  - component: {fileID: 4811203134104833011}
+  - component: {fileID: -1714481059390680222}
+  - component: {fileID: -4097496911018028310}
   m_Layer: 0
   m_Name: fence-corner
   m_TagString: Untagged
@@ -133,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBurning: 0
-  timeToKill: -1
+  timeToKill: 5
   timeToStopBurningWhenKilled: 0
   firePrefab: {fileID: 8407230002061172552, guid: 8ca2aef613fc7459eabdc92eb6345ca3,
     type: 3}
@@ -164,3 +167,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &4811203134104833011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806109093024187024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a8ac5323a2a4c379def140e11a6fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4097496911018028310}
+        m_TargetAssemblyTypeName: RemovableFence, Assembly-CSharp
+        m_MethodName: TriggerButtonEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-1714481059390680222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806109093024187024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7828e795e4a384809bff93bdba4c8d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4097496911018028310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806109093024187024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c60822fe97f45259c1e9b30b134aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

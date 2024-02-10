@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 6547167493241178075}
   - component: {fileID: 3608294647888445999}
   - component: {fileID: 2093367700180053156}
+  - component: {fileID: 4179523511774062306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -539,6 +540,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
+  audioManager: {fileID: 0}
   possessAtStart: 1
   immortalWhenUnpossesed: 1
 --- !u!114 &4750291982258160573
@@ -554,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCoolDown: 1
+  attackTime: 0
   onAttack:
     m_PersistentCalls:
       m_Calls:
@@ -610,6 +613,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
+  canMoveDuringAttackCooldown: 1
+--- !u!114 &4179523511774062306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949100829800483309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06efb8e986f2a421b9823b581b63ba0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBurning: 0
+  timeToKill: 3
+  timeToStopBurningWhenKilled: 3
+  firePrefab: {fileID: 8407230002061172552, guid: 8ca2aef613fc7459eabdc92eb6345ca3,
+    type: 3}
 --- !u!1001 &4044934179865356614
 PrefabInstance:
   m_ObjectHideFlags: 0

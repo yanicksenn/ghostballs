@@ -98,7 +98,7 @@ public class Inflammable : MonoBehaviour
         if (!isFireStarting && !isBurning && (killable == null || !killable.IsDead))
         {
             isFireStarting = true;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
             isBurning = true;
             isFireStarting = false;
             PlayFire();

@@ -742,12 +742,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3286604458726653591, guid: bff7c2b97d9a06f4a8eec47b9a9da83f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 834713842}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff7c2b97d9a06f4a8eec47b9a9da83f, type: 3}
+--- !u!114 &119009949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5537678715484770718, guid: bff7c2b97d9a06f4a8eec47b9a9da83f,
+    type: 3}
+  m_PrefabInstance: {fileID: 119009948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c60822fe97f45259c1e9b30b134aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &145441722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4151,24 +4159,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff7c2b97d9a06f4a8eec47b9a9da83f, type: 3}
---- !u!1 &834713841 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3286604458726653591, guid: bff7c2b97d9a06f4a8eec47b9a9da83f,
-    type: 3}
-  m_PrefabInstance: {fileID: 119009948}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &834713842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834713841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c60822fe97f45259c1e9b30b134aa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &834713847 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2681283643754404784, guid: bff7c2b97d9a06f4a8eec47b9a9da83f,
@@ -10450,7 +10440,17 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 834713842}
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026816968010063658, guid: 95bf4be99eb8042fbbbe1761c9055189,
+        type: 3}
+      propertyPath: targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026816968010063658, guid: 95bf4be99eb8042fbbbe1761c9055189,
+        type: 3}
+      propertyPath: targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 119009949}
     - target: {fileID: 3214993300393001261, guid: 95bf4be99eb8042fbbbe1761c9055189,
         type: 3}
       propertyPath: m_Name

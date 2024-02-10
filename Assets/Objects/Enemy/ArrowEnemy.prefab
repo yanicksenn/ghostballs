@@ -172,7 +172,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7206621946686392902
@@ -204,6 +204,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   possession: {fileID: 11400000, guid: 5af1288161009449e899a7be01b91a51, type: 2}
+  audioManager: {fileID: 0}
   possessAtStart: 0
   immortalWhenUnpossesed: 0
 --- !u!114 &368279202161392287
@@ -219,6 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCoolDown: 2
+  attackTime: 0
   onAttack:
     m_PersistentCalls:
       m_Calls:
@@ -303,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBurning: 0
   timeToKill: 3
-  timeToStopBurningWhenKilled: 5
+  timeToStopBurningWhenKilled: 3
   firePrefab: {fileID: 8407230002061172552, guid: 8ca2aef613fc7459eabdc92eb6345ca3,
     type: 3}
 --- !u!114 &4762551237910127237
@@ -319,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
+  canMoveDuringAttackCooldown: 1
 --- !u!1 &8381842793213440514
 GameObject:
   m_ObjectHideFlags: 0
