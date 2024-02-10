@@ -8,22 +8,24 @@ public class Trap : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         Killable killable = other.gameObject.GetComponent<Killable>();
-        GameObject body= other.gameObject;
+        Walker walker = other.gameObject.GetComponent<Walker>();
         Debug.Log("Trap collided!");
         if(!trapActivated && killable!=null){
              Debug.Log("Trap triggered!");
              killable.Die();
-             MovePlayerToCenter(body);
+             MovePlayerToCenter(walker);
              trapActivated=true;
         }
     }
 
-    void MovePlayerToCenter(GameObject player)
+    void MovePlayerToCenter(Walker walker)
     {
         // Calculate the center position of the trap (you might need to adjust this based on your trap's position)
         Vector3 trapCenter = transform.position;
 
+        walker.enabled = false;
+
         // Set the player's position to the center of the trap
-        player.transform.position = trapCenter;
+        walker.gameObject.transform.position = new Vector3(trapCenter.x, trapCenter.y + 0.5f, trapCenter.z);
     }
 }
